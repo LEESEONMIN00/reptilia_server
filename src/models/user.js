@@ -7,10 +7,6 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
     username: String,
     hashedPassword: String,
-    email: String,
-    phone: String,
-    description:String,
-    address: String,
     joinedDate:{
         type: Date,
         default: new Date(),

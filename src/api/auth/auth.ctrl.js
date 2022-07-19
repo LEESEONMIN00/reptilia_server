@@ -11,29 +11,12 @@ exports.register = async (ctx)=>{
         .max(20)
         .required(),
         password: Joi.string().required(),
-        email:Joi.string().email().required(),
-        phone:Joi.string().required(),
-        address:Joi.string().required(),
 
     });
     const result = schema.validate(ctx.request.body);
     console.log(result);
-    if (result.error) {
-        ctx.status = 400;
-        console.log(result.error.details[0].path["email"]);
-        switch (result.error.details[0].path[0]) {
-            case 'email':
-                ctx.body = {message:"E-mail형식 맞추셈"};
-                break;
-        
-            default:
-                break;
-        }
-
-        ctx.body = result.error;
-        return;
-    }
-    const{username, password,email="",phone="",address=""} = ctx.request.body;
+  
+    const{username, password} = ctx.request.body;
     console.log("111",ctx.request.body);
     try {
         const exists = await User.findByUsername(username);
@@ -43,7 +26,6 @@ exports.register = async (ctx)=>{
         }
         const user = new User({
             username,
-            email,phone,address,
             description:'',
         });
         await user.setPassword(password);
@@ -66,7 +48,7 @@ exports.register = async (ctx)=>{
 //로그인
 exports.login = async (ctx)=>{
     const {username, password} = ctx.request.body;
-
+   
     if(!username || !password){
         ctx.status = 401;
         return;
@@ -106,3 +88,19 @@ exports.logout = async (ctx) =>{
     ctx.cookies.set('access_token');
     ctx.status = 204;
 };
+
+// if (result.error) {
+//     ctx.status = 400;
+//     console.log(result.error.details[0].path["email"]);
+//     switch (result.error.details[0].path[0]) {
+//         case 'email':
+//             ctx.body = {message:"E-mail형식 맞추셈"};
+//             break;
+    
+//         default:
+//             break;
+//     }
+
+//     ctx.body = result.error;
+//     return;
+// }

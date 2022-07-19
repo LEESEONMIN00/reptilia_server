@@ -6,6 +6,7 @@
   "author": "Leeseonmin",
   "license": "MIT",
   "dependencies": {
+    "@koa/cors": "^3.3.0",
     "axios": "^0.27.2",
     "bcrypt": "^5.0.1",
     "concurrently": "^7.2.1",

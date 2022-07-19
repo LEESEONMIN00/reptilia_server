@@ -7,7 +7,8 @@ const mongoose = require('mongoose');
 const jwtMiddleware = require('./middleware/jwtMiddleware');
 const path = require('path');
 const { send } = require('process');
-const serve =require('koa-static')
+const serve =require('koa-static');
+const cors = require('@koa/cors');
 //const {createFakeData} = require('./createFakeData');
 
 
@@ -28,6 +29,7 @@ const app = new Koa();
 const router = new Router();
 
 router.use('/api', api.routes());
+app.use(cors());
 
 app.use(koaBodyparser());
 app.use(jwtMiddleware);
