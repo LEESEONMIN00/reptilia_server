@@ -10,14 +10,12 @@ exports.register = async (ctx)=>{
         .min(3)
         .max(20)
         .required(),
-        password: Joi.string().required(),
-
+      
     });
     const result = schema.validate(ctx.request.body);
     console.log(result);
   
-    const{username, password} = ctx.request.body;
-    console.log("111",ctx.request.body);
+    const{username} = ctx.request.body;
     try {
         const exists = await User.findByUsername(username);
         if(exists){
@@ -28,7 +26,6 @@ exports.register = async (ctx)=>{
             username,
             description:'',
         });
-        await user.setPassword(password);
         await user.save();
 
         ctx.body = user.serialize();
@@ -47,9 +44,9 @@ exports.register = async (ctx)=>{
 }
 //로그인
 exports.login = async (ctx)=>{
-    const {username, password} = ctx.request.body;
+    const {username} = ctx.request.body;
    
-    if(!username || !password){
+    if(!username){
         ctx.status = 401;
         return;
     }
@@ -59,11 +56,7 @@ exports.login = async (ctx)=>{
             ctx.status = 401;
             return;
         }
-        const validPwd = await user.checkPassword(password);
-        if(!validPwd){
-            ctx.status = 401;
-            return;
-        }
+        
         ctx.body = user.serialize();
         const token = user.generateToken();
         ctx.cookies.set('access_token',token,{
@@ -89,18 +82,3 @@ exports.logout = async (ctx) =>{
     ctx.status = 204;
 };
 
-// if (result.error) {
-//     ctx.status = 400;
-//     console.log(result.error.details[0].path["email"]);
-//     switch (result.error.details[0].path[0]) {
-//         case 'email':
-//             ctx.body = {message:"E-mail형식 맞추셈"};
-//             break;
-    
-//         default:
-//             break;
-//     }
-
-//     ctx.body = result.error;
-//     return;
-// }

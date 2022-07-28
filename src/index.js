@@ -9,7 +9,6 @@ const path = require('path');
 const { send } = require('process');
 const serve = require('koa-static');
 const cors = require('@koa/cors');
-//const {createFakeData} = require('./createFakeData');
 
 
 
@@ -18,7 +17,6 @@ const { PORT, MONGO_URI } = process.env;
 mongoose.connect(MONGO_URI, { useNewUrlParser: true })
   .then(() => {
     console.log('DB생성완료');
-    //  createFakeData();
   })
   .catch((e) => {
     console.error(e);
@@ -36,14 +34,6 @@ app.use(jwtMiddleware);
 
 app.use(router.routes()).use(router.allowedMethods());
 
-// const dir = path.resolve(__dirname, '../albatross/build');
-// app.use(serve(dir));
-
-// app.use(async (ctx) => {
-//   if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
-//     await send(ctx, 'index.html', { root: dir });
-//   }
-// });
 const port = PORT;
 
 
