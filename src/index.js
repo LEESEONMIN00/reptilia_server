@@ -36,14 +36,14 @@ app.use(jwtMiddleware);
 
 app.use(router.routes()).use(router.allowedMethods());
 
-const dir = path.resolve(__dirname, '../albatross/build');
-app.use(serve(dir));
+// const dir = path.resolve(__dirname, '../albatross/build');
+// app.use(serve(dir));
 
-app.use(async (ctx) => {
-  if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
-    await send(ctx, 'index.html', { root: dir });
-  }
-});
+// app.use(async (ctx) => {
+//   if (ctx.status === 404 && ctx.path.indexOf('/api') !== 0) {
+//     await send(ctx, 'index.html', { root: dir });
+//   }
+// });
 const port = PORT;
 
 

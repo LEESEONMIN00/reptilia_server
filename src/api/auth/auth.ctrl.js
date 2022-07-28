@@ -59,7 +59,11 @@ exports.login = async (ctx)=>{
             ctx.status = 401;
             return;
         }
-     he
+        const validPwd = await user.checkPassword(password);
+        if(!validPwd){
+            ctx.status = 401;
+            return;
+        }
         ctx.body = user.serialize();
         const token = user.generateToken();
         ctx.cookies.set('access_token',token,{
