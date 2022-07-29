@@ -4,6 +4,7 @@ const authCtrl = require('./auth.ctrl');
 const auth = new Router();
 
 auth.post('/login', authCtrl.login);
+auth.post('/register',authCtrl.register);
 auth.post('/logout', authCtrl.logout);
 
 
